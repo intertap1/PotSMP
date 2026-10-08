@@ -88,7 +88,7 @@ public class RageBar implements ClientModInitializer {
             if (client.player.hasEffect(RegisterEffects.INFERNO)) {
                 return 2;
             }
-            else if (client.player.hasEffect(RegisterEffects.LIGHTNING)) {
+            else if (client.player.hasEffect(RegisterEffects.ACCELERATION)) {
                 return 2;
             }
             else if (client.player.hasEffect(RegisterEffects.HEAVY)) {

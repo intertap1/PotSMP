@@ -93,7 +93,7 @@ public class InfernoBar implements ClientModInitializer {
             if (client.player.hasEffect(RegisterEffects.RAGE)) {
                 return 1;
             }
-            else if (client.player.hasEffect(RegisterEffects.LIGHTNING)) {
+            else if (client.player.hasEffect(RegisterEffects.ACCELERATION)) {
                 return 1;
             }
             else if (client.player.hasEffect(RegisterEffects.HEAVY)) {
