@@ -1,0 +1,11 @@
+{
+  "values": [
+    "pot_smp:building_potion",
+    "pot_smp:inferno_potion",
+    "pot_smp:lightning_potion",
+    "pot_smp:shrinking_potion",
+    "pot_smp:undying_potion",
+    "pot_smp:mining_potion",
+    "pot_smp:titan_potion"
+  ]
+}

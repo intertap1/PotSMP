@@ -1,0 +1,118 @@
+package com.common.events;
+
+import com.common.data.ModPotionTagProvider;
+import com.common.data.PotionAffinityData;
+import com.common.item.ModItem;
+import com.common.item.ModPotionIds;
+import com.common.item.ModPotionTags;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
+
+import java.util.Objects;
+import java.util.UUID;
+
+
+public class ItemCallback {
+    public static void register() {
+        UseItemCallback.EVENT.register((player,level,hand) -> {
+            MinecraftServer server = level.getServer();
+            UUID uuid = player.getUUID();
+
+            if (server == null) {
+                return InteractionResult.PASS;
+            }
+
+            if (player.isSpectator()) {
+                return InteractionResult.PASS;
+            }
+            if (isCustomPotion(player,hand)) {
+            PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
+            potionAffinityData.incrementPotionAffinityLevel(uuid);
+            player.sendSystemMessage(Component.literal("Potion Affinity Level" + " " + potionAffinityData.getPotionAffinity(uuid)));
+            }
+            PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
+            switch(isAffinityItem(player,hand)) {
+                case 1:
+                    if (potionAffinityData.getPotionAffinity(uuid) < 0) {
+                        potionAffinityData.incrementPotionAffinityLevel(uuid);
+                        player.setItemInHand(hand,ItemStack.EMPTY);
+                        player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
+                    } else {
+                        return InteractionResult.FAIL;
+                    }
+                    break;
+                case 2:
+                    potionAffinityData.decreasePotionAffinityLevel(uuid);
+                    player.setItemInHand(hand,ItemStack.EMPTY);
+                    player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
+                    break;
+                case 3:
+                    potionAffinityData.incrementPotionAffinityLevel(uuid);
+                    player.setItemInHand(hand,ItemStack.EMPTY);
+                    player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
+                    break;
+            }
+            return InteractionResult.PASS;
+        });
+    }
+    public static boolean isCustomPotion(Player player, InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            ItemStack stack = player.getMainHandItem();
+            player.sendSystemMessage(Component.literal("Interaction in Main Hand" + stack));
+            return verifyCustomPotion(player, stack);
+        }
+        else {
+            ItemStack stack = player.getOffhandItem();
+            player.sendSystemMessage(Component.literal("Interaction in Offhand" + stack));
+            return verifyCustomPotion(player, stack);
+        }
+
+    }
+    public static boolean verifyCustomPotion(Player player, ItemStack stack) {
+        PotionContents potionContents = stack.get(DataComponents.POTION_CONTENTS);
+        if (potionContents == null) {
+            return false;
+        }
+        return potionContents.potion()
+                .map(potion -> potion.is(ModPotionTags.CustomPotions))
+                .orElse(false);
+    }
+    public static int isAffinityItem(Player player, InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            ItemStack stack = player.getMainHandItem();
+            player.sendSystemMessage(Component.literal("Testing Affinity Level (Main Hand)"));
+            return verifyAffinityItem(player, stack);
+        }
+        else  {
+            ItemStack stack = player.getOffhandItem();
+            player.sendSystemMessage(Component.literal("Testing Affinity Level (OffHand)"));
+            return verifyAffinityItem(player, stack);
+        }
+    }
+    public static int verifyAffinityItem(Player player, ItemStack stack) {
+        if (stack.is(ModItem.AFFINITY_PLUS)) {
+            player.sendSystemMessage(Component.literal("Note: Returned 1"));
+            return 1;
+        }
+        if (stack.is(ModItem.AFFINITY_MINUS)) {
+            player.sendSystemMessage(Component.literal("Note: Returned 2"));
+            return 2;
+        }
+        if (stack.is(ModItem.AFFINITY_PLUS_UNRESTRICTED)) {
+            player.sendSystemMessage(Component.literal("Note: Returned 3"));
+            return 3;
+        }
+        player.sendSystemMessage(Component.literal("Returned 4"));
+        return 4;
+    }
+}

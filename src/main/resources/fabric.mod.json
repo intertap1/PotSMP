@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "pot_smp",
+	"version": "${version}",
+	"name": "Potion SMP",
+	"description": "This is a mod that adds custom potions, mainly used for Pot SMP",
+	"authors": [
+		"InterTap"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/pot_smp/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+		  "com.PotSMP"
+		],
+		"client": [
+			"com.PotSMPClient",
+			"com.common.powers.InfernoBar",
+			"com.common.powers.RageBar"
+		],
+		"fabric-datagen": [
+			"com.common.datagen.PotModDataGenerator"
+		]
+	},
+	"mixins": [
+		"PotSMP.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
