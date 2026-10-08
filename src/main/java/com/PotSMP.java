@@ -2,6 +2,7 @@ package com;
 
 import com.common.config.PotServerConfig;
 import com.common.effect.RegisterEffects;
+import com.common.events.BlockCounter;
 import com.common.events.DamageEvents;
 import com.common.events.ItemCallback;
 import com.common.init.ModCreativeTabs;
@@ -36,6 +37,7 @@ public class PotSMP implements ModInitializer {
 		ModItem.register();
 		DamageEvents.register();
 		ItemCallback.register();
+		BlockCounter.register();
 		ModCreativeTabs.initialize();
 		PayloadTypeRegistry.clientboundPlay().register(ClientboundInfernalShieldChargePayload.TYPE, ClientboundInfernalShieldChargePayload.CODEC);
 	}

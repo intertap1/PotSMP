@@ -32,6 +32,7 @@ import java.util.UUID;
 
 import static com.common.events.DamageEvents.InfernoHits;
 import static com.PotSMP.CONFIG;
+import static com.common.events.DamageEvents.RageHits;
 
 @Mixin(LivingEntity.class)
 abstract class LivingEntityMixin {
@@ -44,8 +45,6 @@ abstract class LivingEntityMixin {
         LivingEntity entity = (LivingEntity) (Object) this;
         for (MobEffectInstance effect : effects) {
             if (effect.is(RegisterEffects.INFERNO)) {
-
-
                 System.out.println("Inferno ended on " + entity.getName().getString());
             }
         }
@@ -58,7 +57,6 @@ abstract class LivingEntityMixin {
     private void onEffectAdded(MobEffectInstance effect, Entity source, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (effect.is(RegisterEffects.INFERNO)) {
-            System.out.println("Inferno started on " + entity.getName().getString());
         }
     }
 
@@ -96,12 +94,16 @@ abstract class LivingEntityMixin {
     )
     private void onApplyStatusEffect(MobEffectInstance effect, Entity source, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        System.out.println("Apply Status Enabled " + entity.getName().getString());
         if (!entity.level().isClientSide()) {
+
             if(effect.is(RegisterEffects.INFERNO)) {
                 UUID uuid = entity.getUUID();
                 InfernoHits.put(uuid, 0.0);
-                System.out.println("Inferno Charge Cleared on " + entity.getName().getString());
+            }
+
+            if(effect.is(RegisterEffects.RAGE)) {
+                UUID uuid = entity.getUUID();
+                RageHits.put(uuid, 0.0);
             }
         }
     }

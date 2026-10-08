@@ -21,7 +21,7 @@ public class ModPotionTagProvider extends FabricTagsProvider<Potion> {
         builder(ModPotionTags.CustomPotions)
                 .add(ModPotionIds.BUILDING_POTION)
                 .add(ModPotionIds.INFERNO_POTION)
-                .add(ModPotionIds.LIGHTNING_POTION)
+                .add(ModPotionIds.ACCELERATION_POTION)
                 .add(ModPotionIds.SHRINKING_POTION)
                 .add(ModPotionIds.UNDYING_POTION)
                 .add(ModPotionIds.MINING_POTION)

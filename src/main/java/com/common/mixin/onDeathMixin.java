@@ -24,7 +24,6 @@ public class onDeathMixin {
             at = @At("TAIL")
     )
     private void die(DamageSource source, CallbackInfo ci) {
-        System.out.println("ON DEATH MIXIN FIRED");
         LivingEntity victim = (LivingEntity) (Object) this;
         if(!(victim instanceof Player playerVictim)) {
             return;

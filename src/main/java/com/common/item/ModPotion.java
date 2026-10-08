@@ -31,13 +31,13 @@ public class ModPotion {
                     )
             );
     // Lightning Potion
-    public static final Holder<Potion> LIGHTNING_POTION =
+    public static final Holder<Potion> ACCELERATION_POTION =
             Registry.registerForHolder(
                     BuiltInRegistries.POTION,
-                    ModPotionIds.LIGHTNING_POTION,
-                    new Potion("lightning_potion",
+                    ModPotionIds.ACCELERATION_POTION,
+                    new Potion("acceleration_potion",
                             new MobEffectInstance(
-                                    RegisterEffects.LIGHTNING,
+                                    RegisterEffects.ACCELERATION,
                                     200,
                                     0
                             )

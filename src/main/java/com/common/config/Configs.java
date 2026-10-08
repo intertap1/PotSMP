@@ -9,4 +9,6 @@ public class Configs {
     public double RageBarCharge = 0.1;
     public double PassiveRageBarCharge = 0.01;
     public double RageBarReduction = 0.05;
+    public double RageSpeedBonus = 0.0;
+    public double RageStrengthBonus = 0.0;
 }

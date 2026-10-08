@@ -1,5 +1,6 @@
 package com.common.events;
 
+import com.common.effect.RageEffect;
 import com.common.effect.RegisterEffects;
 import com.common.network.ClientboundInfernalShieldChargePayload;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -73,6 +74,7 @@ public class DamageEvents {
             }
         }
         RageHits.put(uuid, Hits);
+        RageEffect.updateRageAttributes(attacker, Hits);
         attacker.sendSystemMessage(Component.literal("Rage Hits: " + Hits));
     }
     public static void RemoveRageCharge(LivingEntity entity, DamageSource source) {

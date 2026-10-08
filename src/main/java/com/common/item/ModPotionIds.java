@@ -10,8 +10,8 @@ public class ModPotionIds {
 
     public static final ResourceKey<Potion> INFERNO_POTION =
             create("inferno_potion");
-    public static final ResourceKey<Potion> LIGHTNING_POTION =
-            create("lightning_potion");
+    public static final ResourceKey<Potion> ACCELERATION_POTION =
+            create("acceleration_potion");
     public static final ResourceKey<Potion> UNDYING_POTION =
             create("undying_potion");
     public static final ResourceKey<Potion> BUILDING_POTION =

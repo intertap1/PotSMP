@@ -15,10 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
-
-import java.util.Objects;
 import java.util.UUID;
 
 
@@ -35,34 +32,7 @@ public class ItemCallback {
             if (player.isSpectator()) {
                 return InteractionResult.PASS;
             }
-            if (isCustomPotion(player,hand)) {
-            PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
-            potionAffinityData.incrementPotionAffinityLevel(uuid);
-            player.sendSystemMessage(Component.literal("Potion Affinity Level" + " " + potionAffinityData.getPotionAffinity(uuid)));
-            }
-            PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
-            switch(isAffinityItem(player,hand)) {
-                case 1:
-                    if (potionAffinityData.getPotionAffinity(uuid) < 0) {
-                        potionAffinityData.incrementPotionAffinityLevel(uuid);
-                        player.setItemInHand(hand,ItemStack.EMPTY);
-                        player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
-                    } else {
-                        return InteractionResult.FAIL;
-                    }
-                    break;
-                case 2:
-                    potionAffinityData.decreasePotionAffinityLevel(uuid);
-                    player.setItemInHand(hand,ItemStack.EMPTY);
-                    player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
-                    break;
-                case 3:
-                    potionAffinityData.incrementPotionAffinityLevel(uuid);
-                    player.setItemInHand(hand,ItemStack.EMPTY);
-                    player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
-                    break;
-            }
-            return InteractionResult.PASS;
+            return PotionAffinityItems(player,uuid,hand,server);
         });
     }
     public static boolean isCustomPotion(Player player, InteractionHand hand) {
@@ -114,5 +84,35 @@ public class ItemCallback {
         }
         player.sendSystemMessage(Component.literal("Returned 4"));
         return 4;
+    }
+    public static InteractionResult PotionAffinityItems(Player player,UUID uuid,InteractionHand hand,MinecraftServer server) {
+        if (isCustomPotion(player,hand)) {
+            PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
+            potionAffinityData.incrementPotionAffinityLevel(uuid);
+            player.sendSystemMessage(Component.literal("Potion Affinity Level" + " " + potionAffinityData.getPotionAffinity(uuid)));
+        }
+        PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
+        switch(isAffinityItem(player,hand)) {
+            case 1:
+                if (potionAffinityData.getPotionAffinity(uuid) < 0) {
+                    potionAffinityData.incrementPotionAffinityLevel(uuid);
+                    player.setItemInHand(hand,ItemStack.EMPTY);
+                    player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
+                } else {
+                    return InteractionResult.FAIL;
+                }
+                break;
+            case 2:
+                potionAffinityData.decreasePotionAffinityLevel(uuid);
+                player.setItemInHand(hand,ItemStack.EMPTY);
+                player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
+                break;
+            case 3:
+                potionAffinityData.incrementPotionAffinityLevel(uuid);
+                player.setItemInHand(hand,ItemStack.EMPTY);
+                player.sendSystemMessage(Component.literal("You have used an Affinity Item. " + "Potion Affinity Level: " + potionAffinityData.getPotionAffinity(uuid)).withColor(TextColor.GREEN));
+                break;
+        }
+        return InteractionResult.PASS;
     }
 }
