@@ -38,12 +38,10 @@ public class ItemCallback {
     public static boolean isCustomPotion(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             ItemStack stack = player.getMainHandItem();
-            player.sendSystemMessage(Component.literal("Interaction in Main Hand" + stack));
             return verifyCustomPotion(player, stack);
         }
         else {
             ItemStack stack = player.getOffhandItem();
-            player.sendSystemMessage(Component.literal("Interaction in Offhand" + stack));
             return verifyCustomPotion(player, stack);
         }
 
@@ -60,36 +58,29 @@ public class ItemCallback {
     public static int isAffinityItem(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             ItemStack stack = player.getMainHandItem();
-            player.sendSystemMessage(Component.literal("Testing Affinity Level (Main Hand)"));
             return verifyAffinityItem(player, stack);
         }
         else  {
             ItemStack stack = player.getOffhandItem();
-            player.sendSystemMessage(Component.literal("Testing Affinity Level (OffHand)"));
             return verifyAffinityItem(player, stack);
         }
     }
     public static int verifyAffinityItem(Player player, ItemStack stack) {
         if (stack.is(ModItem.AFFINITY_PLUS)) {
-            player.sendSystemMessage(Component.literal("Note: Returned 1"));
             return 1;
         }
         if (stack.is(ModItem.AFFINITY_MINUS)) {
-            player.sendSystemMessage(Component.literal("Note: Returned 2"));
             return 2;
         }
-        if (stack.is(ModItem.AFFINITY_PLUS_UNRESTRICTED)) {
-            player.sendSystemMessage(Component.literal("Note: Returned 3"));
+        if (stack.is(ModItem.AFFINITY_PLUS_UNRESTRICTED)) {;
             return 3;
         }
-        player.sendSystemMessage(Component.literal("Returned 4"));
         return 4;
     }
     public static InteractionResult PotionAffinityItems(Player player,UUID uuid,InteractionHand hand,MinecraftServer server) {
         if (isCustomPotion(player,hand)) {
             PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
             potionAffinityData.incrementPotionAffinityLevel(uuid);
-            player.sendSystemMessage(Component.literal("Potion Affinity Level" + " " + potionAffinityData.getPotionAffinity(uuid)));
         }
         PotionAffinityData potionAffinityData = PotionAffinityData.getPotionAffinityData(server);
         switch(isAffinityItem(player,hand)) {

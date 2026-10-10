@@ -23,6 +23,7 @@ import static com.PotSMP.CONFIG;
 public class DamageEvents {
     public static final Map<UUID, Double> InfernoHits = new HashMap<>();
     public static final Map<UUID, Double> RageHits = new HashMap<>();
+    public static final Map<UUID, Double> AccelerationCharge = new HashMap<>();
     public static void register() {
         ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamageTaken, damageTaken, blocked) -> {
                     AddInfernoCharge(source);

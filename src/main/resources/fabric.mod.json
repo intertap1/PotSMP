@@ -21,7 +21,9 @@
 		"client": [
 			"com.PotSMPClient",
 			"com.common.powers.InfernoBar",
-			"com.common.powers.RageBar"
+			"com.common.powers.RageBar",
+			"com.common.powers.AccelerationBar",
+			"com.common.util.KeyMappingsClient"
 		],
 		"fabric-datagen": [
 			"com.common.datagen.PotModDataGenerator"

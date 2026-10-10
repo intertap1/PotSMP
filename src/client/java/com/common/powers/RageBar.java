@@ -13,6 +13,7 @@ import net.minecraft.resources.Identifier;
 import java.util.UUID;
 
 import static com.PotSMPClient.CONFIG;
+import static com.common.events.DamageEvents.InfernoHits;
 import static com.common.events.DamageEvents.RageHits;
 
 public class RageBar implements ClientModInitializer {
@@ -49,12 +50,12 @@ public class RageBar implements ClientModInitializer {
 
             int filledWidth = (int) (barWidth * Hits);
             int x = (int) ((double) (screenWidth - barWidth) / 2 * CONFIG.CooldownXOffset());
-            if (priority == 2) {
+            if (priority == 1) {
                 barWidth = barWidth / 2;
-                x = (int) ((double) (screenWidth / 2) * CONFIG.CooldownXOffset());
+                x = (int) ((double) ((screenWidth / 2) - barWidth) * CONFIG.CooldownXOffset());
                 filledWidth = filledWidth / 2;
             }
-            int y = (int) (screenHeight * CONFIG.CooldownYOffset());
+            int y = (int) ((screenHeight - 30) * CONFIG.CooldownYOffset());
 
 
             // Unfilled Inferno Bar

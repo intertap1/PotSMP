@@ -9,14 +9,19 @@ import com.common.init.ModCreativeTabs;
 import com.common.item.ModItem;
 import com.common.item.ModPotion;
 import com.common.network.ClientboundInfernalShieldChargePayload;
+import com.common.network.DischargePayload;
+import com.common.powers.dischargeAbility;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.Identifier;
 
 import net.minecraft.world.item.CreativeModeTabs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 
 public class PotSMP implements ModInitializer {
 	public static final PotServerConfig CONFIG = PotServerConfig.createAndLoad();
@@ -40,6 +45,13 @@ public class PotSMP implements ModInitializer {
 		BlockCounter.register();
 		ModCreativeTabs.initialize();
 		PayloadTypeRegistry.clientboundPlay().register(ClientboundInfernalShieldChargePayload.TYPE, ClientboundInfernalShieldChargePayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(DischargePayload.TYPE, DischargePayload.CODEC);
+		ServerPlayNetworking.registerGlobalReceiver(DischargePayload.TYPE,
+				(payload, context) -> {
+			var player = context.player();
+			dischargeAbility.discharge(player);
+			System.out.println(player.getName().getString() + " Pressed the keybind");
+				});
 	}
 
 	public static Identifier id(String path) {

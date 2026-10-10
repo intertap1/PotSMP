@@ -14,6 +14,6 @@ public class ClientConfig {
     public double CooldownXOffset = -1;
 
     @RangeConstraint(min= -1, max = 2)
-    public float CooldownYOffset = -1;
+    public double CooldownYOffset = -1;
 
 }

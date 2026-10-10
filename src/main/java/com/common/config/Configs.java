@@ -11,4 +11,8 @@ public class Configs {
     public double RageBarReduction = 0.05;
     public double RageSpeedBonus = 0.0;
     public double RageStrengthBonus = 0.0;
+    public double AccelerationSpeedBonus = 0.0;
+    public double PassiveAccelerationCharge = 0.01;
+    public float AccelerationDischargeDamage = 5F;
+    public float AccelerationCollisionDamage = 5F;
 }

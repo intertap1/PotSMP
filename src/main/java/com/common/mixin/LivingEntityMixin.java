@@ -2,6 +2,7 @@ package com.common.mixin;
 
 import com.common.data.PotionAffinityData;
 import com.common.effect.RegisterEffects;
+import com.common.events.BlockCounter;
 import com.common.network.ClientboundInfernalShieldChargePayload;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -30,9 +31,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collection;
 import java.util.UUID;
 
-import static com.common.events.DamageEvents.InfernoHits;
+import static com.common.events.BlockCounter.blockCounter;
 import static com.PotSMP.CONFIG;
-import static com.common.events.DamageEvents.RageHits;
+import static com.common.events.DamageEvents.*;
 
 @Mixin(LivingEntity.class)
 abstract class LivingEntityMixin {
@@ -104,6 +105,14 @@ abstract class LivingEntityMixin {
             if(effect.is(RegisterEffects.RAGE)) {
                 UUID uuid = entity.getUUID();
                 RageHits.put(uuid, 0.0);
+            }
+            if(effect.is(RegisterEffects.ACCELERATION)) {
+                UUID uuid = entity.getUUID();
+                blockCounter.put(uuid, 0);
+            }
+            if(effect.is(RegisterEffects.ACCELERATION)) {
+                UUID uuid = entity.getUUID();
+                AccelerationCharge.put(uuid, 0.0);
             }
         }
     }

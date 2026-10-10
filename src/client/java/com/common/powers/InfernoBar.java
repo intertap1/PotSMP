@@ -59,7 +59,7 @@ public class InfernoBar implements ClientModInitializer {
                 x = (int) ((double) ((screenWidth / 2) - barWidth) * CONFIG.CooldownXOffset());
                 filledWidth = filledWidth / 2;
             }
-            int y = (int) (screenHeight * CONFIG.CooldownYOffset());
+            int y = (int) ((screenHeight - 30) * CONFIG.CooldownYOffset());
 
             // Unfilled Inferno Bar
             graphics.blit(

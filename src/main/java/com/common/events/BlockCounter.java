@@ -1,7 +1,11 @@
 package com.common.events;
 
+import com.common.effect.AccelerationEffect;
+import com.common.effect.RageEffect;
+import com.common.effect.RegisterEffects;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.HashMap;
@@ -15,17 +19,21 @@ public class BlockCounter {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 UUID uuid = player.getUUID();
+                if (player.hasEffect(RegisterEffects.ACCELERATION)) {
+                    BlockPos currentBlock = player.blockPosition().below();
+                    BlockPos previousBlock = lastBlock.put(uuid,currentBlock);
 
-                BlockPos currentBlock = player.blockPosition().below();
-                BlockPos previousBlock = lastBlock.put(uuid,currentBlock);
-
-                if (previousBlock == null) {
-                    return;
-                }
-                if (!currentBlock.equals(previousBlock)) {
-                    int i = blockCounter.getOrDefault(uuid, 0);
-                    i++;
-                    blockCounter.put(uuid,i);
+                    if (previousBlock == null) {
+                        return;
+                    }
+                    if (currentBlock.getX() != previousBlock.getX() || currentBlock.getZ() != previousBlock.getZ()) {
+                        int i = blockCounter.getOrDefault(uuid, 0);
+                        i++;
+                        i = Math.min(i,250);
+                        blockCounter.put(uuid,i);
+                        AccelerationEffect.updateAccelerationAttributes(player, i);
+                        AccelerationEffect.sendHotbarMessage(player,i);
+                    }
                 }
             }
         });

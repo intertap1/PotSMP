@@ -44,6 +44,20 @@ public class ModPotion {
                     )
             );
 
+    // Rage Potion
+    public static final Holder<Potion> RAGE_POTION =
+            Registry.registerForHolder(
+                    BuiltInRegistries.POTION,
+                    ModPotionIds.RAGE_POTION,
+                    new Potion("rage_potion",
+                            new MobEffectInstance(
+                                    RegisterEffects.RAGE,
+                                    200,
+                                    0
+                            )
+                    )
+            );
+
     // Undying Potion
     public static final Holder<Potion> UNDYING_POTION =
             Registry.registerForHolder(

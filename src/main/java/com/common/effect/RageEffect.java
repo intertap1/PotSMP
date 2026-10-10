@@ -63,17 +63,14 @@ public class RageEffect extends MobEffect {
         double strengthBonus = CONFIG.RageStrengthBonus();
         if (Hits > 0 && Hits <= 0.25) {
             speedBonus = CONFIG.RageSpeedBonus() + 0.2;
-            player.sendSystemMessage(Component.literal("You have reached Rage level 1.").withColor(TextColor.RED));
         }
         if (Hits > 0.25 && Hits <= 0.75) {
             speedBonus = CONFIG.RageSpeedBonus() + 0.4;
             strengthBonus = CONFIG.RageStrengthBonus() + 3;
-            player.sendSystemMessage(Component.literal("You have reached Rage level 2.").withColor(TextColor.RED));
         }
         if (Hits > 0.75) {
             speedBonus = CONFIG.RageSpeedBonus() + 0.4;
             strengthBonus = CONFIG.RageStrengthBonus() + 7.5;
-            player.sendSystemMessage(Component.literal("You have reached Rage level 3.").withColor(TextColor.RED));
         }
         if (Hits == 0) {
             return;
