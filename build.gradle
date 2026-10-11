@@ -15,6 +15,9 @@ repositories {
 	}
 	maven { url 'https://maven.wispforest.io/releases/' }
 	maven { url 'https://jitpack.io' }
+	maven {
+		url "https://libraries.minecraft.net"
+	}
 }
 
 loom {
@@ -39,6 +42,7 @@ dependencies {
 	annotationProcessor ("io.wispforest:owo-lib:${project.owo_version}")
 	implementation ("io.wispforest:owo-lib:${project.owo_version}")
 	compileOnly ("io.wispforest:owo-sentinel:${project.owo_version}")
+	compileOnly ('com.mojang:brigadier:1.0.18')
 }
 
 

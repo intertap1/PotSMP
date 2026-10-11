@@ -1,6 +1,8 @@
 package com.common.util;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 
@@ -15,7 +17,7 @@ public class CollisionDetecter {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 UUID uuid = player.getUUID();
-                if (blockCounter.getOrDefault(uuid,0) == 250) {
+                if (!(blockCounter.getOrDefault(uuid,0) == 250)) {
                     continue;
                 }
                 for (Entity entity : player.level().getEntities(
@@ -23,6 +25,7 @@ public class CollisionDetecter {
                 )) {
                     if (player.getBoundingBox().intersects(entity.getBoundingBox())) {
                         onCollision(player,entity);
+                        player.sendSystemMessage(Component.literal("On Collision.").withColor(TextColor.DARK_PURPLE));
                     }
                 }
             }
@@ -34,7 +37,6 @@ public class CollisionDetecter {
         if (blocks == 250) {
             blockCounter.put(playerUUID, 125);
             entity.hurt(entity.damageSources().lightningBolt(), CONFIG.AccelerationCollisionDamage());
-            double strength = 1.5;
             double dx = entity.getX() - player.getX();
             double dz = entity.getZ() - player.getZ();
             entity.push(dx, 0.5, dz);

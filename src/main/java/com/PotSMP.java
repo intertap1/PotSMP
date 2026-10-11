@@ -11,6 +11,7 @@ import com.common.item.ModPotion;
 import com.common.network.ClientboundInfernalShieldChargePayload;
 import com.common.network.DischargePayload;
 import com.common.powers.dischargeAbility;
+import com.common.util.CollisionDetecter;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -43,6 +44,7 @@ public class PotSMP implements ModInitializer {
 		DamageEvents.register();
 		ItemCallback.register();
 		BlockCounter.register();
+		CollisionDetecter.register();
 		ModCreativeTabs.initialize();
 		PayloadTypeRegistry.clientboundPlay().register(ClientboundInfernalShieldChargePayload.TYPE, ClientboundInfernalShieldChargePayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(DischargePayload.TYPE, DischargePayload.CODEC);
