@@ -1,5 +1,6 @@
 package com;
 
+import com.common.commands.PotSMPCommands;
 import com.common.config.PotServerConfig;
 import com.common.effect.RegisterEffects;
 import com.common.events.BlockCounter;
@@ -46,6 +47,7 @@ public class PotSMP implements ModInitializer {
 		BlockCounter.register();
 		CollisionDetecter.register();
 		ModCreativeTabs.initialize();
+		PotSMPCommands.register();
 		PayloadTypeRegistry.clientboundPlay().register(ClientboundInfernalShieldChargePayload.TYPE, ClientboundInfernalShieldChargePayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(DischargePayload.TYPE, DischargePayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(DischargePayload.TYPE,
