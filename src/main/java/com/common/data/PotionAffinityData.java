@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PotionAffinityData extends SavedData {
-    private final Map<UUID, Integer> PotionAffinityLevel = new HashMap<>();
+    public static final Map<UUID, Integer> PotionAffinityLevel = new HashMap<>();
 
     public PotionAffinityData() {
 
@@ -45,13 +45,13 @@ public class PotionAffinityData extends SavedData {
                 for (Map.Entry<String, Integer> entry : map.entrySet()) {
                     UUID uuid = UUID.fromString(entry.getKey());
                     int affinityLevel = entry.getValue();
-                    data.PotionAffinityLevel.put(uuid, affinityLevel);
+                    PotionAffinityLevel.put(uuid, affinityLevel);
                 }
                 return data;
             },
             data -> {
                 Map<String, Integer> map = new HashMap<>();
-                for (Map.Entry<UUID, Integer> entry : data.PotionAffinityLevel.entrySet()) {
+                for (Map.Entry<UUID, Integer> entry : PotionAffinityLevel.entrySet()) {
                     map.put(
                             entry.getKey().toString(),
                             entry.getValue()

@@ -36,17 +36,17 @@ public class ItemCallback {
         });
     }
     public static boolean isCustomPotion(Player player, InteractionHand hand) {
+        ItemStack stack;
         if (hand == InteractionHand.MAIN_HAND) {
-            ItemStack stack = player.getMainHandItem();
-            return verifyCustomPotion(player, stack);
+            stack = player.getMainHandItem();
         }
         else {
-            ItemStack stack = player.getOffhandItem();
-            return verifyCustomPotion(player, stack);
+            stack = player.getOffhandItem();
         }
+        return verifyCustomPotion(stack);
 
     }
-    public static boolean verifyCustomPotion(Player player, ItemStack stack) {
+    public static boolean verifyCustomPotion( ItemStack stack) {
         PotionContents potionContents = stack.get(DataComponents.POTION_CONTENTS);
         if (potionContents == null) {
             return false;
@@ -56,16 +56,16 @@ public class ItemCallback {
                 .orElse(false);
     }
     public static int isAffinityItem(Player player, InteractionHand hand) {
+        ItemStack stack;
         if (hand == InteractionHand.MAIN_HAND) {
-            ItemStack stack = player.getMainHandItem();
-            return verifyAffinityItem(player, stack);
+            stack = player.getMainHandItem();
         }
         else  {
-            ItemStack stack = player.getOffhandItem();
-            return verifyAffinityItem(player, stack);
+            stack = player.getOffhandItem();
         }
+        return verifyAffinityItem(stack);
     }
-    public static int verifyAffinityItem(Player player, ItemStack stack) {
+    public static int verifyAffinityItem(ItemStack stack) {
         if (stack.is(ModItem.AFFINITY_PLUS)) {
             return 1;
         }
