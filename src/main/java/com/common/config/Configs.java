@@ -15,4 +15,6 @@ public class Configs {
     public double PassiveAccelerationCharge = 0.01;
     public float AccelerationDischargeDamage = 5F;
     public float AccelerationCollisionDamage = 5F;
+    public double PassiveUndyingharge = 0.01;
+    public double UndyingDamageCharge = 0.01;
 }

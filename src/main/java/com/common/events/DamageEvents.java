@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.PotSMP.CONFIG;
+import static com.common.effect.UndyingEffect.UndyingCharge;
 
 public class DamageEvents {
     public static final Map<UUID, Double> InfernoHits = new HashMap<>();
@@ -29,6 +30,7 @@ public class DamageEvents {
                     AddInfernoCharge(source);
                     AddRageCharge(source);
                     RemoveRageCharge(entity,source);
+                    AddUndyingCharge(entity);
                 });
     }
     public static void AddInfernoCharge(DamageSource source) {
@@ -87,6 +89,22 @@ public class DamageEvents {
             }
             RageHits.put(uuid, Hits);
         }
+    }
+    public static void AddUndyingCharge(LivingEntity entity) {
+        if (!(entity instanceof Player player)) {
+            return;
+        }
+        if (!player.hasEffect(RegisterEffects.UNDYING)) {
+            return;
+        }
+
+        UUID uuid = player.getUUID();
+        double totemCharge = UndyingCharge.getOrDefault(uuid, 0.0);
+        if (totemCharge <= 0.99) {
+            totemCharge += CONFIG.UndyingDamageCharge();
+            totemCharge = Math.min(totemCharge,1.01);
+        };
+        UndyingCharge.put(uuid, totemCharge);
     }
 }
 

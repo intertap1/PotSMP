@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
@@ -29,6 +30,9 @@ public class RageEffect extends MobEffect {
 
         if (entity instanceof Player player) {
             UUID uuid = player.getUUID();
+            player.removeEffect(MobEffects.SPEED);
+            player.removeEffect(MobEffects.STRENGTH);
+
 
             double Hits = RageHits.getOrDefault(uuid, 0.0);
 

@@ -19,7 +19,7 @@ public class ModPotionTagProvider extends FabricTagsProvider<Potion> {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         builder(ModPotionTags.CustomPotions)
-                .add(ModPotionIds.BUILDING_POTION)
+                .add(ModPotionIds.HEAVY_POTION)
                 .add(ModPotionIds.INFERNO_POTION)
                 .add(ModPotionIds.ACCELERATION_POTION)
                 .add(ModPotionIds.SHRINKING_POTION)

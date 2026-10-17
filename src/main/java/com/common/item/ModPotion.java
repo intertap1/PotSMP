@@ -25,7 +25,7 @@ public class ModPotion {
                     new Potion("inferno_potion",
                             new MobEffectInstance(
                                     RegisterEffects.INFERNO,
-                                    200,
+                                    19200,
                                     0
                             )
                     )
@@ -38,7 +38,7 @@ public class ModPotion {
                     new Potion("acceleration_potion",
                             new MobEffectInstance(
                                     RegisterEffects.ACCELERATION,
-                                    200,
+                                    19200,
                                     0
                             )
                     )
@@ -52,7 +52,7 @@ public class ModPotion {
                     new Potion("rage_potion",
                             new MobEffectInstance(
                                     RegisterEffects.RAGE,
-                                    200,
+                                    19200,
                                     0
                             )
                     )
@@ -65,22 +65,22 @@ public class ModPotion {
                     ModPotionIds.UNDYING_POTION,
                     new Potion("undying_potion",
                             new MobEffectInstance(
-                                    MobEffects.STRENGTH,
-                                    200,
+                                    RegisterEffects.UNDYING,
+                                    19200,
                                     0
                             )
                     )
             );
 
     // Building Potion
-    public static final Holder<Potion> BUILDING_POTION =
+    public static final Holder<Potion> HEAVY_POTION =
             Registry.registerForHolder(
                     BuiltInRegistries.POTION,
-                    ModPotionIds.BUILDING_POTION,
-                    new Potion("building_potion",
+                    ModPotionIds.HEAVY_POTION,
+                    new Potion("heavy_potion",
                             new MobEffectInstance(
-                                    MobEffects.STRENGTH,
-                                    200,
+                                    RegisterEffects.HEAVY,
+                                    19200,
                                     0
                             )
                     )

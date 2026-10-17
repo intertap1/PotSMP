@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -34,6 +35,7 @@ public class AccelerationEffect extends MobEffect {
     public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
         if (entity instanceof Player player) {
             UUID uuid = player.getUUID();
+            player.removeEffect(MobEffects.SPEED);
             double passiveCharge = AccelerationCharge.getOrDefault(uuid, 0.0);
 
             if (passiveCharge < 1) {
@@ -117,7 +119,7 @@ public class AccelerationEffect extends MobEffect {
     public static void sendHotbarMessage(ServerPlayer player, int blockCounter) {
         player.sendOverlayMessage(Component.literal("Bʟᴏᴄᴋs: " + blockCounter + "/" + "250").withColor(TextColor.LIGHT_PURPLE));
     }
-    public void playSound(SoundEvent sound, LivingEntity player, SoundSource soundSource) {
+    public static void playSound(SoundEvent sound, LivingEntity player, SoundSource soundSource) {
         Level world = player.level();
         world.playSound (
                 null,

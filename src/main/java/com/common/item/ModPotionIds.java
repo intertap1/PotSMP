@@ -16,8 +16,8 @@ public class ModPotionIds {
             create("acceleration_potion");
     public static final ResourceKey<Potion> UNDYING_POTION =
             create("undying_potion");
-    public static final ResourceKey<Potion> BUILDING_POTION =
-            create("building_potion");
+    public static final ResourceKey<Potion> HEAVY_POTION =
+            create("heavy_potion");
     public static final ResourceKey<Potion> MINING_POTION =
             create("mining_potion");
     public static final ResourceKey<Potion> SHRINKING_POTION =

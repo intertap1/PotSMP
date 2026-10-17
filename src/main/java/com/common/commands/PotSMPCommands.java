@@ -1,5 +1,6 @@
 package com.common.commands;
 
+import com.common.effect.UndyingEffect;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.common.data.PotionAffinityData.PotionAffinityLevel;
+import static com.common.effect.UndyingEffect.UndyingCharge;
 import static com.common.events.BlockCounter.blockCounter;
 import static com.common.events.DamageEvents.*;
 
@@ -28,6 +30,7 @@ public class PotSMPCommands {
             root.then(doubleStatCommands(Commands.literal("rageBar"),"RageBar", RageHits))
             .then(doubleStatCommands(Commands.literal("infernoHits"), "InfernoHits", (InfernoHits)))
             .then(doubleStatCommands(Commands.literal("accelerationCharge"), "AccelerationCharge", (AccelerationCharge)))
+            .then(doubleStatCommands(Commands.literal("undyingCharge"), "UndyingCharge", (UndyingCharge)))
             .then(integerStatCommands(Commands.literal("blockCounter"), "BlockCounter", (blockCounter)))
             .then(integerStatCommands(Commands.literal("potionAffinity"), "PotionAffinity", (PotionAffinityLevel)));
             dispatcher.register(root);
