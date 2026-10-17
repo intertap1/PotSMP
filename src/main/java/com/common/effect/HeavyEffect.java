@@ -5,6 +5,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 
 public class HeavyEffect extends MobEffect {
     protected HeavyEffect() {
-        super(MobEffectCategory.BENEFICIAL, 0xF54927);
+        super(MobEffectCategory.BENEFICIAL, 0x6E6564);
     }
 }

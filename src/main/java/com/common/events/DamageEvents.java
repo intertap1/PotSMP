@@ -6,13 +6,11 @@ import com.common.network.ClientboundInfernalShieldChargePayload;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.WindCharge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +18,7 @@ import java.util.UUID;
 
 import static com.PotSMP.CONFIG;
 import static com.common.effect.UndyingEffect.UndyingCharge;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 public class DamageEvents {
     public static final Map<UUID, Double> InfernoHits = new HashMap<>();
@@ -34,6 +33,9 @@ public class DamageEvents {
                 });
     }
     public static void AddInfernoCharge(DamageSource source) {
+        if (source.getDirectEntity() instanceof WindCharge) {
+            return;
+        }
         if (!(source.getEntity() instanceof ServerPlayer attacker)) {
             return;
         }
@@ -55,10 +57,14 @@ public class DamageEvents {
                     ServerPlayNetworking.send(player, payload);
                 }
         }
+
         InfernoHits.put(uuid, Hits);
-        attacker.sendSystemMessage(Component.literal("Inferno Charge: " + Hits));
+        sendPlayerPowerData(attacker);
     }
     public static void AddRageCharge(DamageSource source) {
+        if (source.getDirectEntity() instanceof WindCharge) {
+            return;
+        }
         if (!(source.getEntity() instanceof ServerPlayer attacker)) {
             return;
         }
@@ -77,21 +83,23 @@ public class DamageEvents {
             }
         }
         RageHits.put(uuid, Hits);
+        sendPlayerPowerData(attacker);
         RageEffect.updateRageAttributes(attacker, Hits);
-        attacker.sendSystemMessage(Component.literal("Rage Hits: " + Hits));
+
     }
     public static void RemoveRageCharge(LivingEntity entity, DamageSource source) {
-        if (entity instanceof Player player && source.getEntity() instanceof ServerPlayer attacker && player.hasEffect(RegisterEffects.RAGE)) {
+        if (entity instanceof ServerPlayer player && source.getEntity() instanceof ServerPlayer attacker && player.hasEffect(RegisterEffects.RAGE)) {
             UUID uuid = player.getUUID();
             double Hits = RageHits.getOrDefault(uuid, 0.0);
             if (Hits > CONFIG.RageBarReduction()) {
                 Hits -= CONFIG.RageBarReduction();
             }
             RageHits.put(uuid, Hits);
+            sendPlayerPowerData(player);
         }
     }
     public static void AddUndyingCharge(LivingEntity entity) {
-        if (!(entity instanceof Player player)) {
+        if (!(entity instanceof ServerPlayer player)) {
             return;
         }
         if (!player.hasEffect(RegisterEffects.UNDYING)) {
@@ -105,6 +113,7 @@ public class DamageEvents {
             totemCharge = Math.min(totemCharge,1.01);
         };
         UndyingCharge.put(uuid, totemCharge);
+        sendPlayerPowerData(player);
     }
 }
 

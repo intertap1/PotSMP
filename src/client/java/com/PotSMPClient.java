@@ -3,6 +3,8 @@ package com;
 import com.common.config.PotClientConfig;
 import com.common.effect.RegisterEffects;
 import com.common.network.ClientboundInfernalShieldChargePayload;
+import com.common.network.PlayerPowerPayload;
+import com.common.networking.ClientPowerData;
 import com.mojang.blaze3d.platform.Window;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -20,6 +22,7 @@ public class PotSMPClient implements ClientModInitializer {
     public static final PotClientConfig CONFIG = PotClientConfig.createAndLoad();
     private static final Set<Integer> INFERNO_ENTITIES = new HashSet<>();
 
+
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -35,10 +38,10 @@ public class PotSMPClient implements ClientModInitializer {
     public void setDefaultConfig() {
         // -1 is the default config value
         if (CONFIG.CooldownXOffset() == -1) {
-            CONFIG.CooldownXOffset(0.5);
+            CONFIG.CooldownXOffset(1f);
         }
         if (CONFIG.CooldownYOffset() == -1) {
-            CONFIG.CooldownYOffset(0.9f);
+            CONFIG.CooldownYOffset(1f);
         }
     }
 
@@ -83,5 +86,19 @@ public class PotSMPClient implements ClientModInitializer {
                 }
             });
         }));
+
+        ClientPlayNetworking.registerGlobalReceiver(PlayerPowerPayload.TYPE, (payload, context) -> {
+            context.client().execute(() -> {
+                ClientPowerData.setData(
+                        new ClientPowerData.ClientPlayerPowerData(
+                                payload.accelerationCharge(),
+                                payload.blockCounter(),
+                                payload.UndyingCharge(),
+                                payload.RageHits(),
+                                payload.InfernoHits()
+                        )
+                );
+            });
+        });
     }
 }

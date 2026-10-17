@@ -1,19 +1,33 @@
 {
   "item.minecraft.potion.effect.inferno_potion": "Potion of Infernal Walls",
-  "item.minecraft.potion.effect.lightning_potion": "Potion of Lightning",
+  "item.minecraft.potion.effect.acceleration_potion": "Potion of Acceleration",
   "item.minecraft.potion.effect.undying_potion": "Potion of Undying",
-  "item.minecraft.potion.effect.building_potion": "Potion of Building",
-  "item.minecraft.potion.effect.mining_potion": "Potion of Mining Speed",
-  "item.minecraft.potion.effect.shrinking_potion": "Potion of Shrinking",
-  "item.minecraft.potion.effect.titan_potion": "Potion of Enlargement",
+  "item.minecraft.potion.effect.heavy_potion": "Potion of Heaviness",
+  "item.minecraft.potion.effect.rage_potion": "Potion of Rage",
+
+  "item.minecraft.splash_potion.effect.inferno_potion": "Potion of Infernal Walls",
+  "item.minecraft.splash_potion.effect.acceleration_potion": "Potion of Acceleration",
+  "item.minecraft.splash_potion.effect.undying_potion": "Potion of Undying",
+  "item.minecraft.splash_potion.effect.heavy_potion": "Potion of Heaviness",
+  "item.minecraft.splash_potion.effect.rage_potion": "Potion of Rage",
+
+  "item.minecraft.lingering_potion.effect.inferno_potion": "Potion of Infernal Walls",
+  "item.minecraft.lingering_potion.effect.acceleration_potion": "Potion of Acceleration",
+  "item.minecraft.lingering_potion.effect.undying_potion": "Potion of Undying",
+  "item.minecraft.lingering_potion.effect.heavy_potion": "Potion of Heaviness",
+  "item.minecraft.lingering_potion.effect.rage_potion": "Potion of Rage",
 
   "item.pot_smp.affinity_plus": "Affinity Plus",
   "item.pot_smp.affinity_minus": "Affinity Minus",
   "item.pot_smp.affinity_plus_unrestricted": "Affinity Plus Unrestricted",
 
   "effect.pot_smp.inferno": "Inferno",
-  "effect.pot_smp.lightning": "Lightning",
+  "effect.pot_smp.acceleration": "Acceleration",
+  "effect.pot_smp.heavy": "Heaviness",
+  "effect.pot_smp.undying": "Undying",
+  "effect.pot_smp.rage": "Rage",
 
-  "creativeTab.POT_SMP": "PotSMP"
-
+  "creativeTab.POT_SMP": "PotSMP",
+  "key.category.pot_smp.potion_abilities": "PotSMP",
+  "key.PotSMP.acceleration_discharge": "Discharge"
 }

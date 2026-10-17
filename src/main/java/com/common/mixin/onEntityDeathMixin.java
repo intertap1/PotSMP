@@ -6,18 +6,16 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.component.DeathProtection;
-import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
 import java.util.UUID;
 
 import static com.common.effect.UndyingEffect.UndyingCharge;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 @Mixin(LivingEntity.class)
 public class onEntityDeathMixin {
@@ -50,5 +48,6 @@ public class onEntityDeathMixin {
         victim.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
         victim.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
         victim.removeEffect(RegisterEffects.UNDYING);
+        sendPlayerPowerData((ServerPlayer) victim);
     }
 }

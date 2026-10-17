@@ -15,7 +15,6 @@ public class decayAbility {
     public static void setDecayEnabled(UUID uuid, boolean enabled) {
         DECAY_ENABLED.put(uuid, enabled);
     }
-
     public static void setDecayDisabled(UUID uuid) {
         DECAY_ENABLED.put(uuid, false);
     }

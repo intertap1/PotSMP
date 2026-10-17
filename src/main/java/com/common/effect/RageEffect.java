@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
@@ -16,10 +17,11 @@ import java.util.UUID;
 
 import static com.PotSMP.CONFIG;
 import static com.common.events.DamageEvents.RageHits;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 public class RageEffect extends MobEffect {
     protected RageEffect() {
-        super(MobEffectCategory.BENEFICIAL, 0xF54927);
+        super(MobEffectCategory.BENEFICIAL, 0xF03516);
     }
 
     private static final Identifier RAGE_SPEED_ID = Identifier.fromNamespaceAndPath("pot_smp", "rage_speed");
@@ -40,9 +42,11 @@ public class RageEffect extends MobEffect {
                 Hits += CONFIG.PassiveRageBarCharge();
                 Hits = Math.min(Hits, 1.0);
                 RageHits.put(uuid, Hits);
+                sendPlayerPowerData((ServerPlayer) player);
             }
             if (Hits > 1) {
                 RageHits.put(uuid, 1.0);
+                sendPlayerPowerData((ServerPlayer) player);
             }
 
         }

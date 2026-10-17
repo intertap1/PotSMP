@@ -3,7 +3,6 @@ package com.common.item;
 import com.PotSMP;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.alchemy.Potion;
 
 public class ModPotionIds {

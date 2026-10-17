@@ -1,7 +1,7 @@
 package com.common.powers;
 
-import com.common.effect.AccelerationEffect;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 
@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import static com.PotSMP.CONFIG;
 import static com.common.events.DamageEvents.AccelerationCharge;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 public class dischargeAbility {
 
@@ -40,6 +41,7 @@ public class dischargeAbility {
             }
             dischargeAmount -= 0.25;
             AccelerationCharge.put(uuid,dischargeAmount);
+            sendPlayerPowerData((ServerPlayer) player);
         }
     }
 }

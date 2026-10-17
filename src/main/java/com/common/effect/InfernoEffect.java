@@ -8,14 +8,11 @@ import net.minecraft.world.entity.player.Player;
 
 public class InfernoEffect extends MobEffect {
     protected InfernoEffect() {
-        super(MobEffectCategory.BENEFICIAL, 0xe9b8d3);
+        super(MobEffectCategory.BENEFICIAL, 0xFCAC30);
     }
 
     @Override
     public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
-        if (entity instanceof Player) {
-            ((Player) entity).giveExperiencePoints(1 << amplifier);
-        }
         return super.applyEffectTick(level, entity, amplifier);
     }
 

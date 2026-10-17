@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import static com.PotSMP.CONFIG;
 import static com.common.events.BlockCounter.blockCounter;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 public class CollisionDetecter {
 
@@ -25,7 +26,7 @@ public class CollisionDetecter {
                 )) {
                     if (player.getBoundingBox().intersects(entity.getBoundingBox())) {
                         onCollision(player,entity);
-                        player.sendSystemMessage(Component.literal("On Collision.").withColor(TextColor.DARK_PURPLE));
+                        player.sendSystemMessage(Component.literal("You have collided with: " + entity.getName()).withColor(TextColor.DARK_PURPLE));
                     }
                 }
             }
@@ -36,6 +37,7 @@ public class CollisionDetecter {
         int blocks = blockCounter.getOrDefault(playerUUID, 0);
         if (blocks == 250) {
             blockCounter.put(playerUUID, 125);
+            sendPlayerPowerData(player);
             entity.hurt(entity.damageSources().lightningBolt(), CONFIG.AccelerationCollisionDamage());
             double dx = entity.getX() - player.getX();
             double dz = entity.getZ() - player.getZ();

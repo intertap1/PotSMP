@@ -1,12 +1,9 @@
 package com.common.events;
 
-import com.common.data.ModPotionTagProvider;
 import com.common.data.PotionAffinityData;
 import com.common.item.ModItem;
-import com.common.item.ModPotionIds;
 import com.common.item.ModPotionTags;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;

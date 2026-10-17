@@ -1,20 +1,15 @@
 package com.common.item;
 
-import com.PotSMP;
 import com.common.effect.RegisterEffects;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
-
-import static java.beans.EventHandler.create;
 
 public class ModPotion {
     // Inferno Potion

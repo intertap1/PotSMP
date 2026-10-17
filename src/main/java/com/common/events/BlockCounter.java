@@ -1,16 +1,16 @@
 package com.common.events;
 
 import com.common.effect.AccelerationEffect;
-import com.common.effect.RageEffect;
 import com.common.effect.RegisterEffects;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 public class BlockCounter {
     public static final Map<UUID, BlockPos> lastBlock = new HashMap<>();
@@ -31,6 +31,7 @@ public class BlockCounter {
                         i++;
                         i = Math.min(i,250);
                         blockCounter.put(uuid,i);
+                        sendPlayerPowerData(player);
                         AccelerationEffect.updateAccelerationAttributes(player, i);
                         AccelerationEffect.sendHotbarMessage(player,i);
                     }

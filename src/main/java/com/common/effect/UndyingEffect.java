@@ -20,7 +20,7 @@ import static com.common.effect.AccelerationEffect.playSound;
 public class UndyingEffect extends MobEffect {
     public static final Map<UUID, Double> UndyingCharge = new HashMap<>();
     protected UndyingEffect() {
-        super(MobEffectCategory.BENEFICIAL, 0xF54927);
+        super(MobEffectCategory.BENEFICIAL, 0x8BB013);
     }
     @Override
     public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {

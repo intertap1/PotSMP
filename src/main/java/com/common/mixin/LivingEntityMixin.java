@@ -1,15 +1,10 @@
 package com.common.mixin;
 
-import com.common.data.PotionAffinityData;
 import com.common.effect.RegisterEffects;
-import com.common.events.BlockCounter;
 import com.common.network.ClientboundInfernalShieldChargePayload;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextColor;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -28,7 +23,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -39,9 +33,11 @@ import org.spongepowered.include.com.google.common.base.Predicate;
 import java.util.Collection;
 import java.util.UUID;
 
+import static com.common.effect.UndyingEffect.UndyingCharge;
 import static com.common.events.BlockCounter.blockCounter;
 import static com.PotSMP.CONFIG;
 import static com.common.events.DamageEvents.*;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
@@ -74,17 +70,17 @@ public class LivingEntityMixin {
             argsOnly = true)
     private float modifyIncomingDamage(float amount, ServerLevel world, DamageSource source, float originalAmount) {
         if ((Object) this instanceof LivingEntity player) {
-            if (source.getEntity() != null)
+            if (source.getEntity() != null) {
                 if (player.hasEffect(RegisterEffects.INFERNO)) {
-                    return InfernoReduction(amount, world, player);
+                    amount = InfernoReduction(amount, world, player);
                 }
-            Entity attacker = source.getEntity();
-            if (attacker instanceof ServerPlayer attackingPlayer) {
-                if (attackingPlayer.hasEffect(RegisterEffects.HEAVY)) {
-                    return HeavyAddition(amount, source, player, attackingPlayer);
+                Entity attacker = source.getEntity();
+                if (attacker instanceof ServerPlayer attackingPlayer) {
+                    if (attackingPlayer.hasEffect(RegisterEffects.HEAVY)) {
+                        amount = HeavyAddition(amount, source, player, attackingPlayer);
+                    }
                 }
             }
-
         }
         return amount;
     }
@@ -95,6 +91,9 @@ public class LivingEntityMixin {
     )
     private void onApplyStatusEffect(MobEffectInstance effect, Entity source, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
+        if(!(entity instanceof ServerPlayer player)) {
+            return;
+        }
         if (!entity.level().isClientSide()) {
 
             if (effect.is(RegisterEffects.INFERNO)) {
@@ -114,6 +113,11 @@ public class LivingEntityMixin {
                 UUID uuid = entity.getUUID();
                 AccelerationCharge.put(uuid, 0.0);
             }
+            if (effect.is(RegisterEffects.UNDYING)) {
+                UUID uuid = entity.getUUID();
+                UndyingCharge.put(uuid,0.0);
+            }
+            sendPlayerPowerData(player);
         }
     }
 
@@ -170,7 +174,6 @@ public class LivingEntityMixin {
             heavySlowness(attacker);
         }
         newDamage = newDamage + amount;
-        attacker.sendSystemMessage(Component.literal("Old Damage: " + amount + "New Damage: " + newDamage));
         return newDamage;
     }
     @Unique

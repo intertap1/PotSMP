@@ -2,6 +2,7 @@ package com.common.powers;
 
 
 import com.common.effect.RegisterEffects;
+import com.common.networking.ClientPowerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
@@ -49,8 +50,7 @@ public class InfernoBar implements ClientModInitializer {
             int screenWidth = graphics.guiWidth();
             int screenHeight = graphics.guiHeight();
             // Calculate Progress
-            UUID uuid = client.player.getUUID();
-            double Hits = InfernoHits.getOrDefault(uuid, 0.0);
+            double Hits = ClientPowerData.getData().InfernoHits();
 
             int filledWidth = (int) (barWidth * Hits);
             int x = (int) ((double) (screenWidth - barWidth) / 2 * CONFIG.CooldownXOffset());
@@ -94,12 +94,6 @@ public class InfernoBar implements ClientModInitializer {
                 return 1;
             }
             else if (client.player.hasEffect(RegisterEffects.ACCELERATION)) {
-                return 1;
-            }
-            else if (client.player.hasEffect(RegisterEffects.HEAVY)) {
-                return 1;
-            }
-            else if (client.player.hasEffect(RegisterEffects.UNDYING)) {
                 return 1;
             }
             else {

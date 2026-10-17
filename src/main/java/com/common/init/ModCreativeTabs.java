@@ -3,16 +3,12 @@ package com.common.init;
 import com.PotSMP;
 import com.common.item.ModItem;
 
-import com.common.item.ModPotionTags;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
-import net.minecraft.core.component.DataComponents;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.PotionContents;
 
 public class ModCreativeTabs {
     public static final ResourceKey<CreativeModeTab> POT_CREATIVE_TAB_KEY = ResourceKey.create(

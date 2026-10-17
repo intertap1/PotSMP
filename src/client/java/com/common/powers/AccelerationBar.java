@@ -1,6 +1,7 @@
 package com.common.powers;
 
 import com.common.effect.RegisterEffects;
+import com.common.networking.ClientPowerData;
 import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
@@ -47,14 +48,18 @@ public class AccelerationBar implements ClientModInitializer {
             int screenWidth = graphics.guiWidth();
             int screenHeight = graphics.guiHeight();
             // Calculate Progress
-            UUID uuid = client.player.getUUID();
-            double passiveCharge = AccelerationCharge.getOrDefault(uuid, 0.0);
+            double passiveCharge = ClientPowerData.getData().accelerationCharge();
 
             int filledWidth = (int) (barWidth * passiveCharge);
             int x = (int) ((double) (screenWidth - barWidth) / 2 * CONFIG.CooldownXOffset());
             if (priority == 1) {
                 barWidth = barWidth / 2;
                 x = (int) ((double) ((screenWidth / 2) - barWidth) * CONFIG.CooldownXOffset());
+                filledWidth = filledWidth / 2;
+            }
+            if (priority == 3) {
+                barWidth = barWidth / 2;
+                x = (int) ((double) ((screenWidth / 2)) * CONFIG.CooldownXOffset());
                 filledWidth = filledWidth / 2;
             }
             int y = (int) ((screenHeight - 30) * CONFIG.CooldownYOffset());
@@ -92,13 +97,7 @@ public class AccelerationBar implements ClientModInitializer {
             return 1;
         }
         else if (client.player.hasEffect(RegisterEffects.INFERNO)) {
-            return 2;
-        }
-        else if (client.player.hasEffect(RegisterEffects.HEAVY)) {
-            return 1;
-        }
-        else if (client.player.hasEffect(RegisterEffects.UNDYING)) {
-            return 1;
+            return 3;
         }
         else {
             return 2;

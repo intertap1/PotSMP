@@ -11,6 +11,8 @@ import com.common.item.ModItem;
 import com.common.item.ModPotion;
 import com.common.network.ClientboundInfernalShieldChargePayload;
 import com.common.network.DischargePayload;
+import com.common.network.PlayerNetworking;
+import com.common.network.PlayerPowerPayload;
 import com.common.powers.dischargeAbility;
 import com.common.util.CollisionDetecter;
 import net.fabricmc.api.ModInitializer;
@@ -48,8 +50,10 @@ public class PotSMP implements ModInitializer {
 		CollisionDetecter.register();
 		ModCreativeTabs.initialize();
 		PotSMPCommands.register();
+		PlayerNetworking.initialize();
 		PayloadTypeRegistry.clientboundPlay().register(ClientboundInfernalShieldChargePayload.TYPE, ClientboundInfernalShieldChargePayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(DischargePayload.TYPE, DischargePayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(PlayerPowerPayload.TYPE, PlayerPowerPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(DischargePayload.TYPE,
 				(payload, context) -> {
 			var player = context.player();
@@ -57,6 +61,7 @@ public class PotSMP implements ModInitializer {
 			System.out.println(player.getName().getString() + " Pressed the keybind");
 				});
 	}
+
 
 	public static Identifier id(String path) {
 		return Identifier.fromNamespaceAndPath(MOD_ID, path);

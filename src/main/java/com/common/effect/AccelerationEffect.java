@@ -25,6 +25,7 @@ import java.util.UUID;
 import static com.PotSMP.CONFIG;
 import static com.common.events.BlockCounter.blockCounter;
 import static com.common.events.DamageEvents.AccelerationCharge;
+import static com.common.network.PlayerNetworking.sendPlayerPowerData;
 
 public class AccelerationEffect extends MobEffect {
     protected AccelerationEffect() {
@@ -42,6 +43,7 @@ public class AccelerationEffect extends MobEffect {
                 passiveCharge += CONFIG.PassiveAccelerationCharge();
                 passiveCharge = Math.min(passiveCharge,1.0);
                 AccelerationCharge.put(uuid, passiveCharge);
+                sendPlayerPowerData((ServerPlayer) player);
             }
             if (passiveCharge == 0.25) {
                 playSound(SoundEvents.PLAYER_LEVELUP, player, SoundSource.PLAYERS);
@@ -54,6 +56,7 @@ public class AccelerationEffect extends MobEffect {
             if (decayAbility.getDecayTimer(uuid) == 5 ) {
                 decayAbility.resetDecayTimer(uuid);
                 blockCounter.put(uuid,125);
+                sendPlayerPowerData((ServerPlayer) player);
             }
         }
         return true;

@@ -35,7 +35,6 @@ public class KeyMappingsClient implements ClientModInitializer {
             }
                 ClientPlayNetworking.send(
                         new DischargePayload(client.player.getName().getString()));
-                client.player.sendSystemMessage(Component.literal("Key press detected in the world"));
             }
         });
     }

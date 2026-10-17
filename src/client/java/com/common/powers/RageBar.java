@@ -1,6 +1,7 @@
 package com.common.powers;
 
 import com.common.effect.RegisterEffects;
+import com.common.networking.ClientPowerData;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
@@ -45,14 +46,13 @@ public class RageBar implements ClientModInitializer {
             int screenWidth = graphics.guiWidth();
             int screenHeight = graphics.guiHeight();
             // Calculate Progress
-            UUID uuid = client.player.getUUID();
-            double Hits = RageHits.getOrDefault(uuid, 0.0);
+            double Hits = ClientPowerData.getData().RageHits();
 
             int filledWidth = (int) (barWidth * Hits);
             int x = (int) ((double) (screenWidth - barWidth) / 2 * CONFIG.CooldownXOffset());
-            if (priority == 1) {
+            if (priority == 2) {
                 barWidth = barWidth / 2;
-                x = (int) ((double) ((screenWidth / 2) - barWidth) * CONFIG.CooldownXOffset());
+                x = (int) ((double) ((screenWidth / 2)) * CONFIG.CooldownXOffset());
                 filledWidth = filledWidth / 2;
             }
             int y = (int) ((screenHeight - 30) * CONFIG.CooldownYOffset());
@@ -90,12 +90,6 @@ public class RageBar implements ClientModInitializer {
                 return 2;
             }
             else if (client.player.hasEffect(RegisterEffects.ACCELERATION)) {
-                return 2;
-            }
-            else if (client.player.hasEffect(RegisterEffects.HEAVY)) {
-                return 2;
-            }
-            else if (client.player.hasEffect(RegisterEffects.UNDYING)) {
                 return 2;
             }
             else {
